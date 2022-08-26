@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -18,4 +19,13 @@ import { AppService } from './app.service';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+// NestModule을 implements 해서
+// configure() {}안에 mongoose.set('debug', true)를 추가해 주면
+// 몽고DB 사용시 로그가 찍히도록 설정할 수 있다.
+export class AppModule implements NestModule {
+  private readonly isDev: boolean = process.env.MODE === 'dev' ? true : false;
+
+  configure(consumer: MiddlewareConsumer) {
+    mongoose.set('debug', this.isDev);
+  }
+}
