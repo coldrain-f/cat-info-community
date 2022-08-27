@@ -15,7 +15,6 @@ export class CatsService {
     const { email, name, password } = body;
     const isCatExist = await this.catModel.exists({ email });
 
-    console.log(`isCatExist = ${isCatExist}`);
     if (isCatExist) {
       // 403 Forbidden은 권한이 없어서 요청을 거부
       // 401 Unauthorized는 인증되지 않았기 때문에 요청 거부
