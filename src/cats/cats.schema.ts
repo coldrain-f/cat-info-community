@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory, SchemaOptions } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Document } from 'mongoose';
 
@@ -10,6 +11,11 @@ const options: SchemaOptions = {
 // 에러 핸들링을 하기 위해서 class-validator를 사용한다.
 @Schema(options)
 export class Cat extends Document {
+  @ApiProperty({
+    example: 'olaf@naver.com',
+    description: 'email',
+    required: true,
+  })
   @Prop({
     required: true,
     unique: true,
@@ -18,6 +24,11 @@ export class Cat extends Document {
   @IsNotEmpty()
   email: string;
 
+  @ApiProperty({
+    example: 'olaf',
+    description: 'name',
+    required: true,
+  })
   @Prop({
     required: true,
   })
@@ -25,6 +36,11 @@ export class Cat extends Document {
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({
+    example: '1106',
+    description: 'password',
+    required: true,
+  })
   @Prop({
     required: true,
   })
